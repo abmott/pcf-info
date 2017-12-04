@@ -2,10 +2,6 @@
 require 'json'
 require_relative 'params.rb'
 require 'aws-sdk-s3'
-require 'yaml'
-
-creds = YAML::load_file('creds.yaml')
-
 
 wrkdir = Dir.pwd
 
@@ -19,14 +15,14 @@ end
 
 case environment
 when "sandbox"
-  environment_url = creds[:"#{environment}"]['opsman_url']
-  pass = creds[:"#{environment}"]['opsman_password']
+  environment_url = sandbox_env
+  pass = sandbox_pass
 when "pdc"
-  environment_url = creds[:"#{environment}"]['opsman_url']
-  pass = creds[:"#{environment}"]['opsman_password']
+  environment_url = pdc_env
+  pass = pdc_pass
 when "gdc"
-  environment_url = creds[:"#{environment}"]['opsman_url']
-  pass = creds[:"#{environment}"]['opsman_password']
+  environment_url = gdc_env
+  pass = gdc_pass
 else
   puts "must enter environment - pdc, gdc or sandbox"
   puts "enter deployment: --> "
@@ -48,8 +44,8 @@ products_list.puts ".................."
 products_list.close
 
 s3 = Aws::S3::Resource.new(
-  :access_key_id => creds[:aws]['aws_access_key'],
-  :secret_access_key => creds[:aws]['aws_secret_key'],
+  :access_key_id => aws_access_key,
+  :secret_access_key => aws_secret_key,
   :region => 'us-east-1'
 )
 
