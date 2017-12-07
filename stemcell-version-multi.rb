@@ -1,41 +1,39 @@
 #!/usr/bin/env ruby
 require 'json'
-require_relative 'params.rb'
+#require_relative 'params.rb'
 require 'aws-sdk-s3'
-require 'yaml'
+require 'yaml' #envirnment variables
 
 creds = YAML::load_file('creds.yaml')
-
-
 wrkdir = Dir.pwd
 
 if not ARGV[0]
   then
   puts ""
-  print "enter deployment: --> "
+  print "Enter Deployment: --> "
     environment = gets.chop
   else environment = ARGV[0]
 end
 
-case environment
-when "sandbox"
-  environment_url = creds[:"#{environment}"]['opsman_url']
-  pass = creds[:"#{environment}"]['opsman_password']
-when "pdc"
-  environment_url = creds[:"#{environment}"]['opsman_url']
-  pass = creds[:"#{environment}"]['opsman_password']
-when "gdc"
-  environment_url = creds[:"#{environment}"]['opsman_url']
-  pass = creds[:"#{environment}"]['opsman_password']
-else
-  puts "must enter environment - pdc, gdc or sandbox"
-  puts "enter deployment: --> "
-  deployment = gets.chop
+loop do
+  case environment
+    when 'sandbox', 'pdc', 'gdc'
+      break
+    else
+      puts "Invalid - must enter - pdc, gdc or sandbox"
+      puts "Enter Deployment: --> "
+      environment = gets.chop
+  end
 end
+
+environment_url = creds[:"#{environment}"]['opsman_url']
+pass = creds[:"#{environment}"]['opsman_password']
+opsman_admin = creds[:"#{environment}"]['opsman_admin']
 
 products_list = File.new("#{wrkdir}/#{environment}-stemcell-versions.yml", "w")
 target = `uaac target #{environment_url}/uaa`
-connect = `uaac token owner get opsman ds-admin -p "#{pass}" -s ""`
+puts target
+connect = `uaac token owner get opsman #{opsman_admin} -p "#{pass}" -s ""`
 context = `uaac context`
 token = context.split("access_token: ")[1].split("      token_type: bearer")[0]
 products = JSON.parse(`curl "#{environment_url}/api/v0/diagnostic_report" -X GET -H "Authorization: Bearer #{token}" -k -s`)

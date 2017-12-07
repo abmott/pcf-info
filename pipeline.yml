@@ -1,0 +1,37 @@
+resource_types:
+- name: ubuntu
+  type: docker-image
+  source:
+    repository: docker.prod.pdc.digital.csaa-insurance.aaa.com/ubuntu-ruby-aws
+    tag: latest
+
+jobs:
+- name: stemcell
+  plan:
+  - get: pcf-info-repo
+    trigger: false
+  - get: scheduler
+    trigger: true
+  - task: stemcell
+    file: pcf-info-repo/ci/tasks/stemcell/stemcell.rb
+    params:
+      PCF_ENVIRONMENT: {{pcf_environment}}
+      OPSMAN_USERNAME: {{opsman_admin}}
+      OPSMAN_PASSWORD: {{opsman_password}}
+      OPSMAN_URI: {{opsman_url}}
+      AWS_ACCESS_KEY: {{aws_access_key}}
+      AWS_SECRET_KEY: {{aws_secret_key}}
+
+
+resources:
+- name: pcf-info-repo
+  type: git
+  source:
+    uri: https://github.com/aaa-ncnu-ie/pcf_info.git
+    branch: master
+- name: scheduler
+  type: time
+  source:
+    start: {{scheduler-time-window-start}}
+    stop: {{scheduler-time-window-stop}}
+    location: {{scheduler-time-location}}
