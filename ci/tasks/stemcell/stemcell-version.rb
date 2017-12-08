@@ -4,6 +4,8 @@ require 'json'
 require 'aws-sdk-s3'
 require 'yaml' #envirnment variables
 
+wrkdir = Dir.pwd
+
 products_list = File.new("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-stemcell-versions.yml", "w")
 target = `uaac target #{ENV['OPSMAN_URI']}/uaa --skip-ssl-validation`
 connect = `uaac token owner get opsman #{ENV['OPSMAN_USERNAME']} -p "#{ENV['OPSMAN_PASSWORD']}" -s ""`
@@ -20,7 +22,7 @@ products_list.close
 
 s3 = Aws::S3::Resource.new(
   :access_key_id => "#{ENV['AWS_ACCESS_KEY']}",
-  :secret_access_key "#{ENV['AWS_SECRET_KEY']}",
+  :secret_access_key => "#{ENV['AWS_SECRET_KEY']}",
   :region => 'us-east-1'
 )
 
