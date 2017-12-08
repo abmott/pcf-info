@@ -10,8 +10,6 @@ jobs:
   plan:
   - get: pcf-info-repo
     trigger: false
-#  - get: scheduler
-#    trigger: true
   - task: stemcell
     file: pcf-info-repo/ci/tasks/stemcell/stemcell.rb
     params:
@@ -29,9 +27,3 @@ resources:
   source:
     uri: https://github.com/aaa-ncnu-ie/pcf_info.git
     branch: master
-#- name: scheduler
-#  type: time
-#  source:
-#    start: {{scheduler-time-window-start}}
-#    stop: {{scheduler-time-window-stop}}
-#    location: {{scheduler-time-location}}
