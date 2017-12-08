@@ -6,12 +6,54 @@ resource_types:
     tag: latest
 
 jobs:
-- name: stemcell
+- name: stemcells
   plan:
   - get: pcf-info-repo
     trigger: false
-  - task: stemcell
+  - task: stemcells
     file: pcf-info-repo/ci/tasks/stemcell/task.yml
+    params:
+      PCF_ENVIRONMENT: {{pcf_environment}}
+      OPSMAN_USERNAME: {{opsman_admin}}
+      OPSMAN_PASSWORD: {{opsman_password}}
+      OPSMAN_URI: {{opsman_url}}
+      AWS_ACCESS_KEY: {{aws_access_key}}
+      AWS_SECRET_KEY: {{aws_secret_key}}
+
+- name: available-products
+  plan:
+  - get: pcf-info-repo
+    trigger: false
+  - task: available-products
+    file: pcf-info-repo/ci/tasks/available-products/task.yml
+    params:
+      PCF_ENVIRONMENT: {{pcf_environment}}
+      OPSMAN_USERNAME: {{opsman_admin}}
+      OPSMAN_PASSWORD: {{opsman_password}}
+      OPSMAN_URI: {{opsman_url}}
+      AWS_ACCESS_KEY: {{aws_access_key}}
+      AWS_SECRET_KEY: {{aws_secret_key}}
+
+- name: deployed-products
+  plan:
+  - get: pcf-info-repo
+    trigger: false
+  - task: deployed-products
+    file: pcf-info-repo/ci/tasks/deployed-products/task.yml
+    params:
+      PCF_ENVIRONMENT: {{pcf_environment}}
+      OPSMAN_USERNAME: {{opsman_admin}}
+      OPSMAN_PASSWORD: {{opsman_password}}
+      OPSMAN_URI: {{opsman_url}}
+      AWS_ACCESS_KEY: {{aws_access_key}}
+      AWS_SECRET_KEY: {{aws_secret_key}}
+
+- name: staged-products
+  plan:
+  - get: pcf-info-repo
+    trigger: false
+  - task: staged-products
+    file: pcf-info-repo/ci/tasks/staged-products/task.yml
     params:
       PCF_ENVIRONMENT: {{pcf_environment}}
       OPSMAN_USERNAME: {{opsman_admin}}
