@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require 'json'
 require 'aws-sdk-s3'
-require 'yaml' #envirnment variables
+require 'yaml'
 
 wrkdir = Dir.pwd
 
