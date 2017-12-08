@@ -20,10 +20,10 @@ jobs:
       AWS_ACCESS_KEY: {{aws_access_key}}
       AWS_SECRET_KEY: {{aws_secret_key}}
 
-
 resources:
 - name: pcf-info-repo
   type: git
   source:
-    uri: https://github.com/aaa-ncnu-ie/pcf_info.git
+    uri: git@github.com:aaa-ncnu-ie/pcf_info.git
     branch: master
+    private_key: {{github_private_key}}
