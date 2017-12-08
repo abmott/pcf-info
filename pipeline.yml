@@ -11,7 +11,7 @@ jobs:
   - get: pcf-info-repo
     trigger: false
   - task: stemcell
-    file: pcf-info-repo/ci/tasks/stemcell/stemcell.rb
+    file: pcf-info-repo/ci/tasks/stemcell/stemcell-version.rb
     params:
       PCF_ENVIRONMENT: {{pcf_environment}}
       OPSMAN_USERNAME: {{opsman_admin}}
@@ -24,6 +24,6 @@ resources:
 - name: pcf-info-repo
   type: git
   source:
-    uri: git@github.com:aaa-ncnu-ie/pcf_info.git
+    uri: ssh://git@ssh.github.com:443/aaa-ncnu-ie/pcf_info.git
     branch: master
     private_key: {{github_private_key}}
