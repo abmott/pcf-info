@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 require 'json'
-#require_relative 'params.rb'
 require 'aws-sdk-s3'
 require 'yaml' #envirnment variables
 
