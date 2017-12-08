@@ -1,5 +1,5 @@
 ---
-platform: ubuntu
+platform: linux
 image_resource:
   type: docker-image
   source:
