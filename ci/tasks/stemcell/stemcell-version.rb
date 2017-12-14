@@ -18,7 +18,7 @@ products['added_products']['deployed'].each do |deployed|
 end
 products_list.puts ".................."
 products_list.close
-
+puts "file opening"
 screen_output = File.open("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-stemcell-versions.yml", "r")
 screen_output = products_list.read
 puts screen_output
