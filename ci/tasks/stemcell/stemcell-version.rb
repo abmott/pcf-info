@@ -12,15 +12,13 @@ context = `uaac context`
 token = context.split("access_token: ")[1].split("      token_type: bearer")[0]
 products = JSON.parse(`curl "#{ENV['OPSMAN_URI']}/api/v0/diagnostic_report" -X GET -H "Authorization: Bearer #{token}" -k -s`)
 products_list.puts "#{ENV['PCF_ENVIRONMENT'].upcase} PCF Deployment Stemcell Information"
-puts "#{ENV['PCF_ENVIRONMENT'].upcase} PCF Deployment Stemcell Information"
 products_list.puts ".................."
-puts ".................."
 products['added_products']['deployed'].each do |deployed|
   products_list.puts "Product: #{deployed['name']} Stemcell: #{deployed['stemcell'].split("bosh-stemcell-")[1].split("-go_agent.tgz")[0]}"
-  puts "Product: #{deployed['name']} Stemcell: #{deployed['stemcell'].split("bosh-stemcell-")[1].split("-go_agent.tgz")[0]}"
 end
 products_list.puts ".................."
-puts ".................."
+screen_output = products_list.read
+puts screen_output
 products_list.close
 
 s3 = Aws::S3::Resource.new(
