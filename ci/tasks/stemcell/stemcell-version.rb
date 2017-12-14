@@ -20,7 +20,8 @@ products_list.puts ".................."
 products_list.close
 puts "file opening"
 File.open("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-stemcell-versions.yml").each do |line|
-puts line
+  puts line
+end
 products_list.close
 
 
