@@ -5,7 +5,7 @@ require 'yaml'
 
 wrkdir = Dir.pwd
 
-products_list = File.new("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-stemcell-versions.yml", "w+")
+products_list = File.new("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-stemcell-versions.yml", "w")
 target = `uaac target #{ENV['OPSMAN_URI']}/uaa --skip-ssl-validation`
 connect = `uaac token owner get opsman #{ENV['OPSMAN_USERNAME']} -p "#{ENV['OPSMAN_PASSWORD']}" -s ""`
 context = `uaac context`
@@ -17,9 +17,13 @@ products['added_products']['deployed'].each do |deployed|
   products_list.puts "Product: #{deployed['name']} Stemcell: #{deployed['stemcell'].split("bosh-stemcell-")[1].split("-go_agent.tgz")[0]}"
 end
 products_list.puts ".................."
+products_list.close
+
+screen_output = File.new("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-stemcell-versions.yml", "r")
 screen_output = products_list.read
 puts screen_output
 products_list.close
+
 
 s3 = Aws::S3::Resource.new(
   :access_key_id => "#{ENV['AWS_ACCESS_KEY']}",
