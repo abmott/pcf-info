@@ -5,7 +5,7 @@ require 'yaml'
 
 wrkdir = Dir.pwd
 
-products_list = File.new("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-stemcell-versions.yml", "w")
+products_list = File.new("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-stemcell-versions.yml", "w+")
 target = `uaac target #{ENV['OPSMAN_URI']}/uaa --skip-ssl-validation`
 connect = `uaac token owner get opsman #{ENV['OPSMAN_USERNAME']} -p "#{ENV['OPSMAN_PASSWORD']}" -s ""`
 context = `uaac context`
