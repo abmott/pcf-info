@@ -18,11 +18,12 @@ products['added_products']['deployed'].each do |deployed|
 end
 products_list.puts ".................."
 products_list.close
-puts "file opening"
+
+puts ""
 File.open("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-stemcell-versions.yml").each do |line|
   puts line
 end
-products_list.close
+
 
 
 s3 = Aws::S3::Resource.new(

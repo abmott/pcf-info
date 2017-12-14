@@ -18,6 +18,12 @@ end
 products_list.puts ".................."
 products_list.close
 
+puts ""
+File.open("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-deployed_products.yml").each do |line|
+  puts line
+end
+
+
 s3 = Aws::S3::Resource.new(
   :access_key_id => "#{ENV['AWS_ACCESS_KEY']}",
   :secret_access_key => "#{ENV['AWS_SECRET_KEY']}",

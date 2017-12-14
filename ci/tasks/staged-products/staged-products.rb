@@ -16,8 +16,13 @@ products.each do |values|
   products_list.puts "#{values['type']} #{values['product_version']}"
 end
 products_list.puts ".................."
-
 products_list.close
+puts ""
+File.open("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-staged_products.yml").each do |line|
+  puts line
+end
+products_list.close
+
 
 s3 = Aws::S3::Resource.new(
   :access_key_id => "#{ENV['AWS_ACCESS_KEY']}",
