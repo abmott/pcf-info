@@ -8,6 +8,8 @@ resource_types:
 jobs:
 - name: stemcells
   plan:
+  - get: scheduler
+    trigger: true
   - get: pcf-info-repo
     trigger: false
   - task: stemcells
@@ -22,6 +24,8 @@ jobs:
 
 - name: available-products
   plan:
+  - get: scheduler
+    trigger: true
   - get: pcf-info-repo
     trigger: false
   - task: available-products
@@ -36,6 +40,8 @@ jobs:
 
 - name: deployed-products
   plan:
+  - get: scheduler
+    trigger: true
   - get: pcf-info-repo
     trigger: false
   - task: deployed-products
@@ -50,6 +56,8 @@ jobs:
 
 - name: staged-products
   plan:
+  - get: scheduler
+    trigger: true
   - get: pcf-info-repo
     trigger: false
   - task: staged-products
@@ -69,3 +77,9 @@ resources:
     uri: ssh://git@ssh.github.com:443/aaa-ncnu-ie/pcf_info.git
     branch: master
     private_key: {{github_private_key}}
+- name: scheduler
+  type: time
+  source:
+    start: {{scheduler-time-window-start}}
+    stop: {{scheduler-time-window-stop}}
+    location: {{scheduler-time-location}}

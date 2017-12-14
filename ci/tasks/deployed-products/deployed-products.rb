@@ -5,7 +5,7 @@ require 'aws-sdk-s3'
 wrkdir = Dir.pwd
 
 products_list = File.new("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-deployed_products.yml", "w")
-target = `uaac target #{ENV['OPSMAN_URI']}/uaa`
+target = `uaac target #{ENV['OPSMAN_URI']}/uaa --skip-ssl-validation`
 connect = `uaac token owner get opsman #{ENV['OPSMAN_USERNAME']} -p "#{ENV['OPSMAN_PASSWORD']}" -s ""`
 context = `uaac context`
 token = context.split("access_token: ")[1].split("      token_type: bearer")[0]
