@@ -19,7 +19,7 @@ end
 products_list.puts ".................."
 products_list.close
 
-screen_output = File.new("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-stemcell-versions.yml", "r")
+screen_output = File.open("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-stemcell-versions.yml", "r")
 screen_output = products_list.read
 puts screen_output
 products_list.close
