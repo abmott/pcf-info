@@ -17,7 +17,7 @@ products['added_products']['deployed'].each do |deployed|
   products_list.puts "Product: #{deployed['name']} Stemcell: #{deployed['stemcell'].split("bosh-stemcell-")[1].split("-go_agent.tgz")[0]}"
 end
 products_list.puts ".................."
-products_list.close
+#products_list.close
 puts "file opening"
 screen_output = File.open("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-stemcell-versions.yml", "r")
 screen_output = products_list.read
