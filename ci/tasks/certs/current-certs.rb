@@ -13,8 +13,8 @@ token = context.split("access_token: ")[1].split("      token_type: bearer")[0]
 products = JSON.parse(`curl "#{ENV['OPSMAN_URI']}/api/v0/deployed/certificates?expires_within=2y" -X GET -H "Authorization: Bearer #{token}" -k -s`)
 products_list.puts "#{ENV['PCF_ENVIRONMENT'].upcase} PCF Current Certs"
 products_list.puts ".................."
-products.each do |values|
-  products_list.puts "#{values['issuer']} #{values['valid_until']} #{values['property_reference']}"
+products['certificates'].each do |values|
+  products_list.puts "Issuer: #{values['issuer']} Valid Until: #{values['valid_until']} Reference: #{values['property_reference']}"
 end
 products_list.puts ".................."
 products_list.close
