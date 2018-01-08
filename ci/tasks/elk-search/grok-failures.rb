@@ -83,7 +83,7 @@ search_grok = JSON.parse (`curl -XGET "#{ENV['GROK_ENDPOINT']}/_search" -H 'Cont
 puts ".................."
 puts search_grok
 puts ".................."
-search_grok.each do |values|
-  puts values[1][0]
+#search_grok.each do |values|
+  puts search_grok['hits']['total']
 end
 puts ".................."
