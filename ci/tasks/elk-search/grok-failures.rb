@@ -3,7 +3,8 @@ require 'json'
 
 
 #output = `curl \"https://www.google.com\"`
-output = `curl -XGET \"http://kibana.prod.pdc.digital.csaa-insurance.aaa.com:9200/_search\" -H 'Content-Type: application/json' -d'
+#output = `curl \"http://10.91.36.101:9200\"`
+output = `curl -XGET "http://10.91.36.101:9200/_search" -H 'Content-Type: application/json' -d'
 {
   "size": 0,
   "aggs": {},
@@ -79,6 +80,6 @@ output = `curl -XGET \"http://kibana.prod.pdc.digital.csaa-insurance.aaa.com:920
     },
     "fragment_size": 2147483647
   }
-}'`
+}`
 #output = `ping 10.91.36.101 -c 4`
 puts output
