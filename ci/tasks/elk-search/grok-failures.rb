@@ -4,7 +4,7 @@ require 'json'
 
 #output = `curl \"https://www.google.com\"`
 #output = `curl \"http://10.91.36.101:9200\"`
-output = `curl -XGET "#{ENV['grok_endpoint']}/_search" -H 'Content-Type: application/json' -d'
+output = `curl -XGET "#{ENV['GROK_ENDPOINT']}/_search" -H 'Content-Type: application/json' -d'
 {
   "size": 0,
   "aggs": {},

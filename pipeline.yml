@@ -95,7 +95,7 @@ jobs:
   - task: grok-failures
     file: pcf-info-repo/ci/tasks/elk-search/task.yml
     params:
-      grok_endpoint: {{grok_endpoint}}
+      GROK_ENDPOINT: {{grok_endpoint}}
 
 resources:
 - name: pcf-info-repo
