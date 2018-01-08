@@ -85,5 +85,5 @@ puts search_grok
 puts ".................."
 #search_grok.each do |values|
   puts search_grok['hits']['total']
-end
+#end
 puts ".................."
