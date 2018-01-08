@@ -3,5 +3,6 @@ require 'json'
 
 
 #output = `curl \"https://www.google.com\"`
-output = `curl \"http://10.91.36.101\"`
+#output = `curl \"http://10.91.36.101\"`
+output = `ping 10.91.36.101 -c 4`
 puts output
