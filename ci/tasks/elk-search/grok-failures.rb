@@ -82,6 +82,6 @@ search_grok = JSON.parse (`curl -XGET "#{ENV['GROK_ENDPOINT']}/_search" -H 'Cont
 #output = `ping 10.91.36.101 -c 4`
 puts ".................."
 search_grok.each do |values|
-  puts "#{values['hits']['0']}"
+  puts "#{values['0']['0']}"
 end
 puts ".................."
