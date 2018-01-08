@@ -86,7 +86,7 @@ jobs:
       AWS_ACCESS_KEY: {{aws_access_key}}
       AWS_SECRET_KEY: {{aws_secret_key}}
 
-- name: current-certs
+- name: grok-failures
   plan:
   #- get: scheduler {{scheduler-time-window-start}} to {{scheduler-time-window-stop}}
   #  trigger: true
