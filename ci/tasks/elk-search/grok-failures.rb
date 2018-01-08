@@ -2,7 +2,7 @@
 require 'json'
 
 
-search_grok = JSON.parse (`curl -XGET "#{ENV['GROK_ENDPOINT']}/_search" -H 'Content-Type: application/json' -d'
+search_grok = `curl -XGET "#{ENV['GROK_ENDPOINT']}/_search" -H 'Content-Type: application/json' -d'
 {
   "size": 0,
   "aggs": {},
@@ -78,10 +78,10 @@ search_grok = JSON.parse (`curl -XGET "#{ENV['GROK_ENDPOINT']}/_search" -H 'Cont
     },
     "fragment_size": 2147483647
   }
-}'`)
+}'`
 #output = `ping 10.91.36.101 -c 4`
 puts ".................."
 search_grok.each do |values|
-  puts "#{values['0']['0']}"
+  puts "#{values['hits']['total']}"
 end
 puts ".................."
