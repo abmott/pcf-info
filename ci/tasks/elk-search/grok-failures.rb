@@ -26,7 +26,7 @@ search_grok = JSON.parse (`curl -XGET "#{ENV['GROK_ENDPOINT']}/_search" -H 'Cont
         {
           "range": {
             "@timestamp": {
-              "gt": "now-1w"
+              "gt": "now-1h"
             }
           }
         }
@@ -66,7 +66,7 @@ search_grok = JSON.parse (`curl -XGET "#{ENV['GROK_ENDPOINT']}/_search" -H 'Cont
               {
                 "range": {
                   "@timestamp": {
-                    "gt": "now-1w"
+                    "gt": "now-1h"
                   }
                 }
               }
