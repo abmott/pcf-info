@@ -2,10 +2,7 @@
 require 'json'
 
 
-#output = `curl \"https://www.google.com\"`
-#output = `curl \"http://10.91.36.101:9200\"`
-puts "hello -- look -- #{ENV['GROK_ENDPOINT']} --"
-output = `curl -XGET "#{ENV['GROK_ENDPOINT']}/_search" -H 'Content-Type: application/json' -d'
+search_grok = JSON.parse (`curl -XGET "#{ENV['GROK_ENDPOINT']}/_search" -H 'Content-Type: application/json' -d'
 {
   "size": 0,
   "aggs": {},
@@ -81,6 +78,10 @@ output = `curl -XGET "#{ENV['GROK_ENDPOINT']}/_search" -H 'Content-Type: applica
     },
     "fragment_size": 2147483647
   }
-}'`
+}'`)
 #output = `ping 10.91.36.101 -c 4`
-puts output
+puts ".................."
+search_grok.each do |values|
+  products_list.puts "#{values['hits']} #{values['total']}"
+end
+puts ".................."
