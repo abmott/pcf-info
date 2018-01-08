@@ -28,7 +28,7 @@ output = `curl -XGET "http://10.91.36.101:9200/_search" -H 'Content-Type: applic
         {
           "range": {
             "@timestamp": {
-              "gt": "now-1h"
+              "gt": "now-1w"
             }
           }
         }
@@ -68,7 +68,7 @@ output = `curl -XGET "http://10.91.36.101:9200/_search" -H 'Content-Type: applic
               {
                 "range": {
                   "@timestamp": {
-                    "gt": "now-1h"
+                    "gt": "now-1w"
                   }
                 }
               }
