@@ -86,6 +86,22 @@ jobs:
       AWS_ACCESS_KEY: {{aws_access_key}}
       AWS_SECRET_KEY: {{aws_secret_key}}
 
+- name: current-certs
+  plan:
+  #- get: scheduler {{scheduler-time-window-start}} to {{scheduler-time-window-stop}}
+  #  trigger: true
+  - get: pcf-info-repo
+    trigger: false
+  - task: grok-failures
+    file: pcf-info-repo/ci/tasks/elk-search/task.yml
+    # params:
+    #   PCF_ENVIRONMENT: {{pcf_environment}}
+    #   OPSMAN_USERNAME: {{opsman_admin}}
+    #   OPSMAN_PASSWORD: {{opsman_password}}
+    #   OPSMAN_URI: {{opsman_url}}
+    #   AWS_ACCESS_KEY: {{aws_access_key}}
+    #   AWS_SECRET_KEY: {{aws_secret_key}}
+
 resources:
 - name: pcf-info-repo
   type: git
