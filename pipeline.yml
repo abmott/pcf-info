@@ -94,13 +94,8 @@ jobs:
     trigger: false
   - task: grok-failures
     file: pcf-info-repo/ci/tasks/elk-search/task.yml
-    # params:
-    #   PCF_ENVIRONMENT: {{pcf_environment}}
-    #   OPSMAN_USERNAME: {{opsman_admin}}
-    #   OPSMAN_PASSWORD: {{opsman_password}}
-    #   OPSMAN_URI: {{opsman_url}}
-    #   AWS_ACCESS_KEY: {{aws_access_key}}
-    #   AWS_SECRET_KEY: {{aws_secret_key}}
+    params:
+      grok_endpoint: {{grok_endpoint}}
 
 resources:
 - name: pcf-info-repo
