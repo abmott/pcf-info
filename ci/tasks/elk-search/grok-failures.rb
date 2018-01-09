@@ -26,7 +26,7 @@ search_grok = JSON.parse (`curl -XGET "#{ENV['GROK_ENDPOINT']}/_search" -H 'Cont
         {
           "range": {
             "@timestamp": {
-              "gt": "now-1h"
+              "gt": "now-1w"
             }
           }
         }
@@ -66,7 +66,7 @@ search_grok = JSON.parse (`curl -XGET "#{ENV['GROK_ENDPOINT']}/_search" -H 'Cont
               {
                 "range": {
                   "@timestamp": {
-                    "gt": "now-1h"
+                    "gt": "now-1w"
                   }
                 }
               }
@@ -87,5 +87,7 @@ puts ".................."
   puts search_grok['hits']['total']
 #end
 puts ".................."
-puts search_grok['hits']['total'].class
+if search_grok['hits']['total'] > 0
+  then puts "is a big number"
+end
 #https://hooks.zapier.com/hooks/catch/1143336/9a003f/
