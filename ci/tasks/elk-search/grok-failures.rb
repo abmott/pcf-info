@@ -87,3 +87,5 @@ puts ".................."
   puts search_grok['hits']['total']
 #end
 puts ".................."
+puts search_grok['hits']['total'].class
+#https://hooks.zapier.com/hooks/catch/1143336/9a003f/
