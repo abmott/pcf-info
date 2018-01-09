@@ -89,5 +89,6 @@ puts ".................."
 puts ".................."
 if search_grok['hits']['total'] > 0
   then puts "is a big number"
+  curl -H "Content-Type: application/json" -X POST -d '{"grok_failures":"'"#{search_grok['hits']['total']}"'"}' https://hooks.zapier.com/hooks/catch/1143336/9a003f/
 end
 #https://hooks.zapier.com/hooks/catch/1143336/9a003f/
