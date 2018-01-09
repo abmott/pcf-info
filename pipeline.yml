@@ -88,8 +88,8 @@ jobs:
 
 - name: grok-failures
   plan:
-  #- get: scheduler {{scheduler-time-window-start}} to {{scheduler-time-window-stop}}
-  #  trigger: true
+  - get: 1h
+    trigger: true
   - get: pcf-info-repo
     trigger: false
   - task: grok-failures
@@ -110,3 +110,6 @@ resources:
     start: {{scheduler-time-window-start}}
     stop: {{scheduler-time-window-stop}}
     location: {{scheduler-time-location}}
+- name: 1h
+  type: time
+  source: {interval: 1h}
