@@ -30,6 +30,9 @@ products['certificates'].each do |values|
             products_list.puts " Expires_in: #{expireDays}_Days Status: Normal"
         end
         #curl Metric to DataDog
+        progress = "Pushing Metrics to Datadog"
+          printf("\r#{progress}")
+          current = progress.concat(".")
         currenttime = Time.now.to_i
         datadogoutput = `curl -sS -H "Content-type: application/json" -X POST -d \
               '{"series":\
