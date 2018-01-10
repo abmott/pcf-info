@@ -39,7 +39,7 @@ products['certificates'].each do |values|
                    "host":"#{values['issuer']}",
                    "tags":["environment:#{ENV['PCF_ENVIRONMENT'].downcase}"]}]}' \
                    https://app.datadoghq.com/api/v1/series?api_key=#{ENV['DATADOG_API_KEY']}`
-        puts datadogoutput
+        #puts datadogoutput
 end
 products_list.puts ".................."
 products_list.close
