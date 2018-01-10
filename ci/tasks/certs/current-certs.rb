@@ -31,7 +31,7 @@ products['certificates'].each do |values|
         end
         #curl Metric to DataDog
           printf("\r#{datadogprogress}")
-          current = progress.concat(".")
+          datadogprogress = datadogprogress.concat(".")
         currenttime = Time.now.to_i
         datadogoutput = `curl -sS -H "Content-type: application/json" -X POST -d \
               '{"series":\
