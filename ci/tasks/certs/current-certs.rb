@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 require 'json'
 require 'aws-sdk-s3'
+require 'date'
+require 'time'
 
 wrkdir = Dir.pwd
 
@@ -15,6 +17,16 @@ products_list.puts "#{ENV['PCF_ENVIRONMENT'].upcase} PCF Current Certs"
 products_list.puts ".................."
 products['certificates'].each do |values|
   products_list.puts "Issuer: #{values['issuer']} Valid Until: #{values['valid_until']} Reference: #{values['property_reference']}"
+  expire = Time.parse("values['valid_until']").localtime
+  expireDays = ((expire - Time.now).to_i / 86400)
+  puts "Cert expires in #{expireDays}"
+    if expireDays < 30
+      puts "Emergency Expire in #{expireDays} Days"
+    elsif expireDays < 60
+      puts "Warning Expire in #{expireDays} Days"
+    else expireDays < 90
+       puts "Caution Expire in #{expireDays} Days"
+    end
 end
 products_list.puts ".................."
 products_list.close
