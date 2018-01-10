@@ -32,8 +32,6 @@ products['certificates'].each do |values|
         #curl Metric to DataDog
         currenttime = Time.now.to_i
         puts currenttime
-        puts "#{ENV['OPSMAN_USERNAME']} user"
-        puts "#{ENV['DATADOG_API_KEY']} Key"
         datadogoutput = `curl  -H "Content-type: application/json" -X POST -d \
               '{"series":\
                   [{"metric":"test.cert.#{values['property_reference']}",
