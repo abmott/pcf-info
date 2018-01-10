@@ -31,7 +31,7 @@ products['certificates'].each do |values|
         end
         #curl Metric to DataDog
         currenttime = Time.now.to_i
-        datadogoutput = `curl  -H "Content-type: application/json" -X POST -d \
+        datadogoutput = `curl -sS -H "Content-type: application/json" -X POST -d \
               '{"series":\
                   [{"metric":"pcf_cert#{values['property_reference']}",
                    "points":[[#{currenttime}, #{expireDays}]],
