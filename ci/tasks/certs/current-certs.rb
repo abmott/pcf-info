@@ -33,7 +33,7 @@ products['certificates'].each do |values|
         currenttime = Time.now.to_i
         datadogoutput = `curl  -H "Content-type: application/json" -X POST -d \
               '{"series":\
-                  [{"metric":"#{ENV['PCF_ENVIRONMENT'].downcase}.cert#{values['property_reference']}",
+                  [{"metric":"pcf_cert#{values['property_reference']}",
                    "points":[[#{currenttime}, #{expireDays}]],
                    "type":"gauge",
                    "host":"#{values['issuer']}",
