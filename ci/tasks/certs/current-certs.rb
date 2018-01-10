@@ -17,7 +17,7 @@ products_list.puts "#{ENV['PCF_ENVIRONMENT'].upcase} PCF Current Certs"
 products_list.puts ".................."
 products['certificates'].each do |values|
   products_list.puts "Issuer: #{values['issuer']} Valid Until: #{values['valid_until']} Reference: #{values['property_reference']}"
-  expire = Time.parse("values['valid_until']").localtime
+  expire = Time.parse(values['valid_until']).localtime
   expireDays = ((expire - Time.now).to_i / 86400)
   puts "Cert expires in #{expireDays}"
     if expireDays < 30
