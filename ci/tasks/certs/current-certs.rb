@@ -19,7 +19,7 @@ products['certificates'].each do |values|
   products_list.puts "Issuer: #{values['issuer']} Valid Until: #{values['valid_until']} Reference: #{values['property_reference']}"
     expire = Time.parse(values['valid_until']).localtime
     expireDays = ((expire - Time.now).to_i / 86400)
-      products_list.puts "Cert expires in #{expireDays}"
+      #products_list.puts "Cert expires in #{expireDays}"
         if expireDays < 30
           products_list.puts "Emergency Expire in #{expireDays} Days"
           elsif expireDays < 60
