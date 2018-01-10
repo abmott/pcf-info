@@ -31,14 +31,13 @@ products['certificates'].each do |values|
         end
         #curl Metric to DataDog
         currenttime = Time.now.to_i
-        puts currenttime
         datadogoutput = `curl  -H "Content-type: application/json" -X POST -d \
               '{"series":\
-                  [{"metric":"#{ENV['PCF_ENVIRONMENT'].upcase}.cert#{values['property_reference']}",
+                  [{"metric":"#{ENV['PCF_ENVIRONMENT'].downcase}.cert#{values['property_reference']}",
                    "points":[[#{currenttime}, #{expireDays}]],
                    "type":"gauge",
                    "host":"#{values['issuer']}",
-                   "tags":["environment:#{ENV['PCF_ENVIRONMENT'].upcase}"]}]}' \
+                   "tags":["environment:#{ENV['PCF_ENVIRONMENT'].downcase}"]}]}' \
                    https://app.datadoghq.com/api/v1/series?api_key=#{ENV['DATADOG_API_KEY']}`
         puts datadogoutput
 end
