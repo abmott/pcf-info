@@ -21,13 +21,13 @@ products['certificates'].each do |values|
     expireDays = ((expire - Time.now).to_i / 86400)
       #products_list.puts "Cert expires in #{expireDays}"
         if expireDays < 30
-          products_list.puts "Emergency Expire in #{expireDays} Days"
+          products_list.print " Emergency Expire in #{expireDays} Days"
           elsif expireDays < 60
-            products_list.puts "Warning Expire in #{expireDays} Days"
+            products_list.print " Warning Expire in #{expireDays} Days"
           elsif expireDays < 90
-            puts "Caution Expire in #{expireDays} Days"
+            print " Caution Expire in #{expireDays} Days"
           else
-            products_list.puts "Expires in #{expireDays} Days"
+            products_list.print " Expires in #{expireDays} Days"
         end
 end
 products_list.puts ".................."
