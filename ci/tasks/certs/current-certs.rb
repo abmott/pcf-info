@@ -29,6 +29,18 @@ products['certificates'].each do |values|
           else
             products_list.puts " Expires_in: #{expireDays}_Days Status: Normal"
         end
+        #curl Metric to DataDog
+        currenttime = Time.now.to_i
+        puts currenttime
+        datadogoutput = `curl  -H "Content-type: application/json" -X POST -d \
+              '{"series":\
+                  [{"metric":"test.cert.#{values['property_reference']}",
+                   "points":[[#{currenttime}, #{expireDays}]],
+                   "type":"gauge",
+                   "host":"#{values['issuer']}",
+                   "tags":["environment:#{ENV['PCF_ENVIRONMENT'].upcase}"]}]}' \
+                   https://app.datadoghq.com/api/v1/series?api_key=#{ENV['DATADOG_API_KEY']}`
+        puts datadogoutput
 end
 products_list.puts ".................."
 products_list.close

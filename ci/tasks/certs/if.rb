@@ -13,3 +13,5 @@ elsif expireDays < 90
 else
    puts "Expires in #{expireDays} Days"
 end
+
+puts seconds_now = Time.now.to_i
