@@ -41,7 +41,7 @@ products['certificates'].each do |values|
                    "host":"#{values['product_guid']}",
                    "tags":["pcf_env:#{ENV['PCF_ENVIRONMENT']}"],
                           ["name:#{values['property_reference'],
-                          ["issuer:#{values['issuer'].split("/C=US/O=")[1].split("/")[0]}"]]}]}' \
+                          ["issuer:#{values['issuer'].split("/C=US/O=")[1].split("/")[0]}"]}]}' \
                    https://app.datadoghq.com/api/v1/series?api_key=#{ENV['DATADOG_API_KEY']}`
         #puts datadogoutput
 end

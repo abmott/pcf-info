@@ -22,8 +22,7 @@ jobs:
       AWS_ACCESS_KEY: {{aws_access_key}}
       AWS_SECRET_KEY: {{aws_secret_key}}
       DATADOG_API_KEY: {{datadog_api_key}}
-      DATADOG_PREFIX: {{datadog_prefix}}
-
+      
 - name: available-products
   plan:
   - get: scheduler {{scheduler-time-window-start}} to {{scheduler-time-window-stop}}
