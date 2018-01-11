@@ -16,7 +16,7 @@ products = JSON.parse(`curl "#{ENV['OPSMAN_URI']}/api/v0/deployed/certificates?e
 products_list.puts "#{ENV['PCF_ENVIRONMENT'].upcase} PCF Current Certs"
 products_list.puts ".................."
 products['certificates'].each do |values|
-  products_list.print "Issuer: #{values['issuer']} Valid_Until: #{values['valid_until']} Reference: #{values['property_reference']}"
+  products_list.print "Issuer: #{values['issuer']} Valid_Until: #{values['valid_until']} Reference: #{values['property_reference']} Product: #{values['product_guid']}"
     expire = Time.parse(values['valid_until']).localtime
     expireDays = ((expire - Time.now).to_i / 86400)
       #products_list.puts "Cert expires in #{expireDays}"
@@ -35,11 +35,13 @@ products['certificates'].each do |values|
         currenttime = Time.now.to_i
         datadogoutput = `curl -sS -H "Content-type: application/json" -X POST -d \
               '{"series":\
-                  [{"metric":"pcf_cert#{values['property_reference']}",
+                  [{"metric":"pcf.cert.days_to_expiration}",
                    "points":[[#{currenttime}, #{expireDays}]],
                    "type":"gauge",
-                   "host":"#{values['issuer']}",
-                   "tags":["environment:#{ENV['PCF_ENVIRONMENT'].downcase}"]}]}' \
+                   "host":"#{values['product_guid']}",
+                   "tags":["pcf_env:#{ENV['PCF_ENVIRONMENT']}"],
+                          ["name:#{values['property_reference'],
+                          ["issuer:#{values['issuer'].split("/C=US/O=")[1].split("/")[0]}"]]}]}' \
                    https://app.datadoghq.com/api/v1/series?api_key=#{ENV['DATADOG_API_KEY']}`
         #puts datadogoutput
 end

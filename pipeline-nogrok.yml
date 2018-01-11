@@ -89,17 +89,6 @@ jobs:
       AWS_SECRET_KEY: {{aws_secret_key}}
       DATADOG_API_KEY: {{datadog_api_key}}
 
-- name: grok-failures
-  plan:
-  - get: 1h
-    trigger: true
-  - get: pcf-info-repo
-    trigger: false
-  - task: grok-failures
-    file: pcf-info-repo/ci/tasks/elk-search/task.yml
-    params:
-      GROK_ENDPOINT: {{grok_endpoint}}
-
 resources:
 - name: pcf-info-repo
   type: git
@@ -113,6 +102,3 @@ resources:
     start: {{scheduler-time-window-start}}
     stop: {{scheduler-time-window-stop}}
     location: {{scheduler-time-location}}
-- name: 1h
-  type: time
-  source: {interval: 1h}
