@@ -16,7 +16,7 @@ products = JSON.parse(`curl "#{ENV['OPSMAN_URI']}/api/v0/deployed/certificates?e
 products_list.puts "#{ENV['PCF_ENVIRONMENT'].upcase} PCF Current Certs"
 products_list.puts ".................."
 products['certificates'].each do |values|
-  products_list.print "Issuer: #{values['issuer']} Valid_Until: #{values['valid_until']} Reference: #{values['property_reference']} Product: #{values['product_guid']}"
+  products_list.print "Issuer: #{values['issuer'].split("/C=US/O=")[1].split("/")[0]} Valid_Until: #{values['valid_until']} Reference: #{values['property_reference']} Product: #{values['product_guid']}"
     expire = Time.parse(values['valid_until']).localtime
     expireDays = ((expire - Time.now).to_i / 86400)
       #products_list.puts "Cert expires in #{expireDays}"
