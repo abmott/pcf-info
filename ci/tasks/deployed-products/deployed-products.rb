@@ -9,15 +9,16 @@ target = `uaac target #{ENV['OPSMAN_URI']}/uaa --skip-ssl-validation`
 connect = `uaac token owner get opsman #{ENV['OPSMAN_USERNAME']} -p "#{ENV['OPSMAN_PASSWORD']}" -s ""`
 context = `uaac context`
 token = context.split("access_token: ")[1].split("      token_type: bearer")[0]
-products = `curl "#{ENV['OPSMAN_URI']}/api/v0/deployed/products" -X GET -H "Authorization: Bearer #{token}" -k -s`
+products = JSON.parse(`curl "#{ENV['OPSMAN_URI']}/api/v0/deployed/products" -X GET -H "Authorization: Bearer #{token}" -k -s`)
 products_list.puts products
-#products = JSON.parse(`curl "#{ENV['OPSMAN_URI']}/api/v0/deployed/products" -X GET -H "Authorization: Bearer #{token}" -k -s`)
-#products_list.puts "#{ENV['PCF_ENVIRONMENT'].upcase} PCF Deployment Deployed Products"
-#products_list.puts ".................."
-#products.each do |values|
-#  products_list.puts "#{values['type']} #{values['product_version']}"
-#end
-#products_list.puts ".................."
+  #Generate Human Readable File
+    #products = JSON.parse(`curl "#{ENV['OPSMAN_URI']}/api/v0/deployed/products" -X GET -H "Authorization: Bearer #{token}" -k -s`)
+    #products_list.puts "#{ENV['PCF_ENVIRONMENT'].upcase} PCF Deployment Deployed Products"
+    #products_list.puts ".................."
+    #products.each do |values|
+    #  products_list.puts "#{values['type']} #{values['product_version']}"
+    #end
+    #products_list.puts ".................."
 products_list.close
 
 puts ""
