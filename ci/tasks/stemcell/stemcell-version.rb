@@ -19,7 +19,7 @@ products["added_products"]["deployed"].each do|name|
 output_arr.push("#{name}")
 end
 #puts "_________________"
-product_list.puts JSON.pretty_generate(output_arr)
+products_list.puts JSON.pretty_generate(output_arr)
 
 
 
