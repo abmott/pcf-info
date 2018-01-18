@@ -11,7 +11,7 @@ connect = `uaac token owner get opsman #{ENV['OPSMAN_USERNAME']} -p "#{ENV['OPSM
 context = `uaac context`
 token = context.split("access_token: ")[1].split("      token_type: bearer")[0]
 products = JSON.parse(`curl "#{ENV['OPSMAN_URI']}/api/v0/diagnostic_report" -X GET -H "Authorization: Bearer #{token}" -k -s`)
-products_list.puts products
+products_list.puts products.to_json
   #Generate Human Readable File
     #products = JSON.parse(`curl "#{ENV['OPSMAN_URI']}/api/v0/diagnostic_report" -X GET -H "Authorization: Bearer #{token}" -k -s`)
     #products_list.puts "#{ENV['PCF_ENVIRONMENT'].upcase} PCF Deployment Stemcell Information"
