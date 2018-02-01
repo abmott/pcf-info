@@ -10,16 +10,16 @@ target = `uaac target #{ENV['OPSMAN_URI']}/uaa --skip-ssl-validation`
 connect = `uaac token owner get opsman #{ENV['OPSMAN_USERNAME']} -p "#{ENV['OPSMAN_PASSWORD']}" -s ""`
 context = `uaac context`
 token = context.split("access_token: ")[1].split("      token_type: bearer")[0]
-products = JSON.parse(`curl "#{ENV['OPSMAN_URI']}/api/v0/diagnostic_report" -X GET -H "Authorization: Bearer #{token}" -k -s`)
+products = `curl "#{ENV['OPSMAN_URI']}/api/v0/diagnostic_report" -X GET -H "Authorization: Bearer #{token}" -k -s`
 
 
-output_arr = []
-products["added_products"]["deployed"].each do|name|
+#output_arr = []
+#products["added_products"]["deployed"].each do|name|
 #puts "#{name}"
-output_arr.push("#{name}")
-end
+#output_arr.push("#{name}")
+#end
 #puts "_________________"
-products_list.puts JSON.pretty_generate(output_arr)
+products_list.puts products
 
 
 
