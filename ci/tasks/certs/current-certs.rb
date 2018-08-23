@@ -6,15 +6,21 @@ require 'time'
 
 wrkdir = Dir.pwd
 datadogprogress = "Pushing Metrics to Datadog"
-
+puts "get List of endpoints from File"
 products_list = File.new("#{wrkdir}/#{ENV['PCF_ENVIRONMENT']}-current_certs.yml", "w")
+puts "targeting UAAC"
 target = `uaac target #{ENV['OPSMAN_URI']}/uaa --skip-ssl-validation`
+puts "Connecting to get token"
 connect = `uaac token owner get opsman #{ENV['OPSMAN_USERNAME']} -p "#{ENV['OPSMAN_PASSWORD']}" -s ""`
+puts "getting context"
 context = `uaac context`
+puts "pulling token from context"
 token = context.split("access_token: ")[1].split("      token_type: bearer")[0]
+puts "getting JSON from curl"
 products = JSON.parse(`curl "#{ENV['OPSMAN_URI']}/api/v0/deployed/certificates?expires_within=2y" -X GET -H "Authorization: Bearer #{token}" -k -s`)
 products_list.puts "#{ENV['PCF_ENVIRONMENT'].upcase} PCF Current Certs"
 products_list.puts ".................."
+puts "starting to post to Datadog"
 products['certificates'].each do |values|
   products_list.print "Issuer: #{values['issuer'].split("/C=US/O=")[1].split("/")[0]} Valid_Until: #{values['valid_until']} Reference: #{values['property_reference']} Product: #{values['product_guid']}"
     expire = Time.parse(values['valid_until']).localtime

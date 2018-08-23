@@ -1,0 +1,17 @@
+API endpoint: https://api.sys.sandbox.gdc.digital.pncie.com
+Authenticating...
+Credentials were rejected, please try again.
+
+Password> 
+Authenticating...
+Credentials were rejected, please try again.
+
+Password> 
+Authenticating...
+Credentials were rejected, please try again.
+
+
+API endpoint:   https://api.sys.sandbox.gdc.digital.pncie.com (API version: 2.98.0)
+Not logged in. Use 'cf login' to log in.
+FAILED
+Unable to authenticate.
