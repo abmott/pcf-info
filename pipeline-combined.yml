@@ -2,18 +2,18 @@ resource_types:
 - name: ubuntu
   type: docker-image
   source:
-    repository: docker.prod.pdc.digital.csaa-insurance.aaa.com/ubuntu-ruby-aws
+    repository: smarshops/pcf-docker-container
     tag: latest
 
 groups:
-  - name: PDC-Info
+  - name: prod-Info
     jobs:
-      - pdc-stemcells
-      - pdc-available-products
-      - pdc-deployed-products
-      - pdc-staged-products
-      - pdc-current-certs
-      - pdc-grok-failures
+      - prod-stemcells
+      - prod-available-products
+      - prod-deployed-products
+      - prod-staged-products
+      - prod-current-certs
+      - prod-grok-failures
 
   - name: GDC-Info
     jobs:
@@ -32,7 +32,7 @@ groups:
       - sandbox-current-certs
 
 jobs:
-- name: pdc-stemcells
+- name: prod-stemcells
   plan:
   - get: scheduler {{scheduler-time-window-start}} to {{scheduler-time-window-stop}}
     trigger: true
@@ -41,15 +41,16 @@ jobs:
   - task: stemcells
     file: pcf-info-repo/ci/tasks/stemcell/task.yml
     params:
-      PCF_ENVIRONMENT: {{pdc-pcf_environment}}
-      OPSMAN_USERNAME: {{pdc-opsman_admin}}
-      OPSMAN_PASSWORD: {{pdc-opsman_password}}
-      OPSMAN_URI: {{pdc-opsman_url}}
+      PCF_ENVIRONMENT: {{prod-pcf_environment}}
+      OPSMAN_USERNAME: {{prod-opsman_admin}}
+      OPSMAN_PASSWORD: {{prod-opsman_password}}
+      OPSMAN_URI: {{prod-opsman_url}}
       AWS_ACCESS_KEY: {{aws_access_key}}
       AWS_SECRET_KEY: {{aws_secret_key}}
       DATADOG_API_KEY: {{datadog_api_key}}
+      S3_BUCKET: {{s3_bucket}}
 
-- name: pdc-available-products
+- name: prod-available-products
   plan:
   - get: scheduler {{scheduler-time-window-start}} to {{scheduler-time-window-stop}}
     trigger: true
@@ -58,14 +59,15 @@ jobs:
   - task: available-products
     file: pcf-info-repo/ci/tasks/available-products/task.yml
     params:
-      PCF_ENVIRONMENT: {{pdc-pcf_environment}}
-      OPSMAN_USERNAME: {{pdc-opsman_admin}}
-      OPSMAN_PASSWORD: {{pdc-opsman_password}}
-      OPSMAN_URI: {{pdc-opsman_url}}
+      PCF_ENVIRONMENT: {{prod-pcf_environment}}
+      OPSMAN_USERNAME: {{prod-opsman_admin}}
+      OPSMAN_PASSWORD: {{prod-opsman_password}}
+      OPSMAN_URI: {{prod-opsman_url}}
       AWS_ACCESS_KEY: {{aws_access_key}}
       AWS_SECRET_KEY: {{aws_secret_key}}
+      S3_BUCKET: {{s3_bucket}}
 
-- name: pdc-deployed-products
+- name: prod-deployed-products
   plan:
   - get: scheduler {{scheduler-time-window-start}} to {{scheduler-time-window-stop}}
     trigger: true
@@ -74,14 +76,15 @@ jobs:
   - task: deployed-products
     file: pcf-info-repo/ci/tasks/deployed-products/task.yml
     params:
-      PCF_ENVIRONMENT: {{pdc-pcf_environment}}
-      OPSMAN_USERNAME: {{pdc-opsman_admin}}
-      OPSMAN_PASSWORD: {{pdc-opsman_password}}
-      OPSMAN_URI: {{pdc-opsman_url}}
+      PCF_ENVIRONMENT: {{prod-pcf_environment}}
+      OPSMAN_USERNAME: {{prod-opsman_admin}}
+      OPSMAN_PASSWORD: {{prod-opsman_password}}
+      OPSMAN_URI: {{prod-opsman_url}}
       AWS_ACCESS_KEY: {{aws_access_key}}
       AWS_SECRET_KEY: {{aws_secret_key}}
+      S3_BUCKET: {{s3_bucket}}
 
-- name: pdc-staged-products
+- name: prod-staged-products
   plan:
   - get: scheduler {{scheduler-time-window-start}} to {{scheduler-time-window-stop}}
     trigger: true
@@ -90,14 +93,15 @@ jobs:
   - task: staged-products
     file: pcf-info-repo/ci/tasks/staged-products/task.yml
     params:
-      PCF_ENVIRONMENT: {{pdc-pcf_environment}}
-      OPSMAN_USERNAME: {{pdc-opsman_admin}}
-      OPSMAN_PASSWORD: {{pdc-opsman_password}}
-      OPSMAN_URI: {{pdc-opsman_url}}
+      PCF_ENVIRONMENT: {{prod-pcf_environment}}
+      OPSMAN_USERNAME: {{prod-opsman_admin}}
+      OPSMAN_PASSWORD: {{prod-opsman_password}}
+      OPSMAN_URI: {{prod-opsman_url}}
       AWS_ACCESS_KEY: {{aws_access_key}}
       AWS_SECRET_KEY: {{aws_secret_key}}
+      S3_BUCKET: {{s3_bucket}}
 
-- name: pdc-current-certs
+- name: prod-current-certs
   plan:
   - get: scheduler {{scheduler-time-window-start}} to {{scheduler-time-window-stop}}
     trigger: true
@@ -106,15 +110,16 @@ jobs:
   - task: current-certs
     file: pcf-info-repo/ci/tasks/certs/task.yml
     params:
-      PCF_ENVIRONMENT: {{pdc-pcf_environment}}
-      OPSMAN_USERNAME: {{pdc-opsman_admin}}
-      OPSMAN_PASSWORD: {{pdc-opsman_password}}
-      OPSMAN_URI: {{pdc-opsman_url}}
+      PCF_ENVIRONMENT: {{prod-pcf_environment}}
+      OPSMAN_USERNAME: {{prod-opsman_admin}}
+      OPSMAN_PASSWORD: {{prod-opsman_password}}
+      OPSMAN_URI: {{prod-opsman_url}}
       AWS_ACCESS_KEY: {{aws_access_key}}
       AWS_SECRET_KEY: {{aws_secret_key}}
+      S3_BUCKET: {{s3_bucket}}
       DATADOG_API_KEY: {{datadog_api_key}}
 
-- name: pdc-grok-failures
+- name: prod-grok-failures
   plan:
   - get: 1h
     trigger: true
@@ -123,89 +128,7 @@ jobs:
   - task: grok-failures
     file: pcf-info-repo/ci/tasks/elk-search/task.yml
     params:
-      GROK_ENDPOINT: {{pdc-grok_endpoint}}
-
-- name: gdc-stemcells
-  plan:
-  - get: scheduler {{scheduler-time-window-start}} to {{scheduler-time-window-stop}}
-    trigger: true
-  - get: pcf-info-repo
-    trigger: false
-  - task: stemcells
-    file: pcf-info-repo/ci/tasks/stemcell/task.yml
-    params:
-      PCF_ENVIRONMENT: {{gdc-pcf_environment}}
-      OPSMAN_USERNAME: {{gdc-opsman_admin}}
-      OPSMAN_PASSWORD: {{gdc-opsman_password}}
-      OPSMAN_URI: {{gdc-opsman_url}}
-      AWS_ACCESS_KEY: {{aws_access_key}}
-      AWS_SECRET_KEY: {{aws_secret_key}}
-      DATADOG_API_KEY: {{datadog_api_key}}
-
-- name: gdc-available-products
-  plan:
-  - get: scheduler {{scheduler-time-window-start}} to {{scheduler-time-window-stop}}
-    trigger: true
-  - get: pcf-info-repo
-    trigger: false
-  - task: available-products
-    file: pcf-info-repo/ci/tasks/available-products/task.yml
-    params:
-      PCF_ENVIRONMENT: {{gdc-pcf_environment}}
-      OPSMAN_USERNAME: {{gdc-opsman_admin}}
-      OPSMAN_PASSWORD: {{gdc-opsman_password}}
-      OPSMAN_URI: {{gdc-opsman_url}}
-      AWS_ACCESS_KEY: {{aws_access_key}}
-      AWS_SECRET_KEY: {{aws_secret_key}}
-
-- name: gdc-deployed-products
-  plan:
-  - get: scheduler {{scheduler-time-window-start}} to {{scheduler-time-window-stop}}
-    trigger: true
-  - get: pcf-info-repo
-    trigger: false
-  - task: deployed-products
-    file: pcf-info-repo/ci/tasks/deployed-products/task.yml
-    params:
-      PCF_ENVIRONMENT: {{gdc-pcf_environment}}
-      OPSMAN_USERNAME: {{gdc-opsman_admin}}
-      OPSMAN_PASSWORD: {{gdc-opsman_password}}
-      OPSMAN_URI: {{gdc-opsman_url}}
-      AWS_ACCESS_KEY: {{aws_access_key}}
-      AWS_SECRET_KEY: {{aws_secret_key}}
-
-- name: gdc-staged-products
-  plan:
-  - get: scheduler {{scheduler-time-window-start}} to {{scheduler-time-window-stop}}
-    trigger: true
-  - get: pcf-info-repo
-    trigger: false
-  - task: staged-products
-    file: pcf-info-repo/ci/tasks/staged-products/task.yml
-    params:
-      PCF_ENVIRONMENT: {{gdc-pcf_environment}}
-      OPSMAN_USERNAME: {{gdc-opsman_admin}}
-      OPSMAN_PASSWORD: {{gdc-opsman_password}}
-      OPSMAN_URI: {{gdc-opsman_url}}
-      AWS_ACCESS_KEY: {{aws_access_key}}
-      AWS_SECRET_KEY: {{aws_secret_key}}
-
-- name: gdc-current-certs
-  plan:
-  - get: scheduler {{scheduler-time-window-start}} to {{scheduler-time-window-stop}}
-    trigger: true
-  - get: pcf-info-repo
-    trigger: false
-  - task: current-certs
-    file: pcf-info-repo/ci/tasks/certs/task.yml
-    params:
-      PCF_ENVIRONMENT: {{gdc-pcf_environment}}
-      OPSMAN_USERNAME: {{gdc-opsman_admin}}
-      OPSMAN_PASSWORD: {{gdc-opsman_password}}
-      OPSMAN_URI: {{gdc-opsman_url}}
-      AWS_ACCESS_KEY: {{aws_access_key}}
-      AWS_SECRET_KEY: {{aws_secret_key}}
-      DATADOG_API_KEY: {{datadog_api_key}}
+      GROK_ENDPOINT: {{prod-grok_endpoint}}
 
 - name: sandbox-stemcells
   plan:
@@ -223,6 +146,7 @@ jobs:
       AWS_ACCESS_KEY: {{aws_access_key}}
       AWS_SECRET_KEY: {{aws_secret_key}}
       DATADOG_API_KEY: {{datadog_api_key}}
+      S3_BUCKET: {{s3_bucket}}
 
 - name: sandbox-available-products
   plan:
@@ -239,6 +163,7 @@ jobs:
       OPSMAN_URI: {{sandbox-opsman_url}}
       AWS_ACCESS_KEY: {{aws_access_key}}
       AWS_SECRET_KEY: {{aws_secret_key}}
+      S3_BUCKET: {{s3_bucket}}
 
 - name: sandbox-deployed-products
   plan:
@@ -255,6 +180,7 @@ jobs:
       OPSMAN_URI: {{sandbox-opsman_url}}
       AWS_ACCESS_KEY: {{aws_access_key}}
       AWS_SECRET_KEY: {{aws_secret_key}}
+      S3_BUCKET: {{s3_bucket}}
 
 - name: sandbox-staged-products
   plan:
@@ -271,6 +197,7 @@ jobs:
       OPSMAN_URI: {{sandbox-opsman_url}}
       AWS_ACCESS_KEY: {{aws_access_key}}
       AWS_SECRET_KEY: {{aws_secret_key}}
+      S3_BUCKET: {{s3_bucket}}
 
 - name: sandbox-current-certs
   plan:
@@ -288,6 +215,7 @@ jobs:
       AWS_ACCESS_KEY: {{aws_access_key}}
       AWS_SECRET_KEY: {{aws_secret_key}}
       DATADOG_API_KEY: {{datadog_api_key}}
+      S3_BUCKET: {{s3_bucket}}
 
 resources:
 - name: pcf-info-repo

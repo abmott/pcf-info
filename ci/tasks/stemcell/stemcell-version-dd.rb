@@ -70,7 +70,7 @@ puts "#{products.split("\"added_products\": \{")[1].split("\"staged\":")[0]}"
 #)
 
 #file = "#{env_name}-stemcell-versions.json"
-#bucket = 'csaa-pcf-info'
+#bucket = "#{ENV['S3_BUCKET']}"
 #
 #name = File.basename(file)
 #

@@ -16,13 +16,15 @@ wrkdir = Dir.pwd
 var_file = File.read("#{wrkdir}/params-local.json")
 vars_values = JSON.parse(var_file)
 vars_values.keys.each do |env|
-  #if env == "tent"
+  #if env == "sandbox"
     pcf_env_url = vars_values["#{env}"]['pcf_env_url']
     admin = vars_values["#{env}"]['opsman_admin']
     opsman_pass = vars_values["#{env}"]['opsman_pass']
     datadog_api = vars_values["#{env}"]['datadog_api_key']
+    pcf_admin_user = vars_values["#{env}"]['pcf_admin_user']
+    pcf_admin_user_pass = vars_values["#{env}"]['pcf_admin_user_pass']
 
-    stdout, stderr, status = Open3.capture3("cf login -a #{pcf_env_url} -o ds -u adam.mott@csaa.com -p 'cn%80oBpgQDZN9F' -s none")
+    stdout, stderr, status = Open3.capture3("cf login -a #{pcf_env_url} -o ds -u #{pcf_admin_user} -p '#{pcf_admin_user_pass}' -s none")
     puts stdout
     puts stderr
     puts status

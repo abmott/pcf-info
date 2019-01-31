@@ -34,7 +34,7 @@ s3 = Aws::S3::Resource.new(
 )
 
 file = "#{ENV['PCF_ENVIRONMENT']}-deployed_products.json"
-bucket = 'csaa-pcf-info'
+bucket = "#{ENV['S3_BUCKET']}"
 
 name = File.basename(file)
 
